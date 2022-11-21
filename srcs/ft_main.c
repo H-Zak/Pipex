@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:16:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/17 19:18:28 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/20 19:28:16 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,17 @@ int	main(int argc, char **argv, char**envp)
 	argc = 0;
 	argv = NULL;
 	envp = NULL;
+	int	fd[2];
+	int id;
+	if (pipe(fd) < 0 )
+		return(ft_printf("Error"));
+	id = fork();
+	if (id < 0)
+	{
+		dup2(fd, 1);
+		return (ft_printf("Error"));
+	}
+
+
 	ft_printf("Hello world");
 }
