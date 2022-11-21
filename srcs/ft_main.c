@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:16:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/21 19:43:14 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2022/11/21 20:45:43 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,15 @@ int	main(int argc, char **argv, char **envp)
 	char **cmd1;
 	char **cmd2;
 	int status;
+	int	fd_in;
+	int	fd_out;
 
+	fd_in = open("in",  O_RDWR);//secu
+	if (fd_in < 0)
+		return (1);
+	fd_out = open("in",   O_CREAT | O_WRONLY | O_TRUNC);//secu
+	if (fd_out < 0)
+		return (1);
 	status = 0;
 	//on doit pouvoir lire le premier fichier qu'on nous envoie, il faut verifier qu'on a le droit de lire dessus sinon envoyer une erreur et faire la deuxieme commande si possible
 	// creer un fichier out ?
@@ -40,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		if (i == 0 && pid ==0)
 		{
 			close(pipe_fd[0]);
-			dup2(pipe_fd[1], STDOUT);
+			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[1]);
 			the_path = get_the_path(envp, cmd1);
 			if (the_path == NULL)
@@ -50,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		if (i == 1 && pid == 0)
 		{
 			close(pipe_fd[1]);
-			dup2(pipe_fd[0], STDIN);
+			dup2(pipe_fd[0], STDIN_FILENO);
 			close(pipe_fd[0]);
 			the_path = get_the_path(envp, cmd2);
 			if (the_path == NULL)
