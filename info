@@ -2,3 +2,4 @@ Error :
 
 si la sortie de ma premiere commande ne correspond pas a l'entré attendu de ma deuxieme commande. Comment le savoir que l'entre attendu n'est pas la bonne et comment le traiter ?
 
+commanger utiliser perror

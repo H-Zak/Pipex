@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 19:14:43 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/21 19:12:23 by zakariyaham      ###   ########.fr       */
+/*   Created: 2022/11/21 16:17:52 by zakariyaham       #+#    #+#             */
+/*   Updated: 2022/11/21 16:18:25 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-# include <unistd.h>
-# include <stddef.h>
-# include "./../libs/printf/libftprintf.h"
-# include "./../libs/gnl/get_next_line.h"
-# include "./../libs/libft/libft.h"
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <errno.h>
-# include <stdio.h>
-# include <string.h>
+#include "../includes/pipex.h"
 
-char	*get_the_path(char **envp, char **cmd);
+int main(int argc, char **argv, char **envp)
+{
+    char *options[3] = {"ls", "-la", NULL};
 
-#endif
+    (void)argc;
+    (void)argv;
+    execve("/usr/bin/ls", options, envp);
+    return (0);
+}

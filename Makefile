@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+         #
+#    By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:57:01 by zakariyaham       #+#    #+#              #
-#    Updated: 2022/11/17 19:17:44 by zhamdouc         ###   ########.fr        #
+#    Updated: 2022/11/21 19:13:28 by zakariyaham      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
 SRC_PATH = ./srcs/
-SRC = ft_main.c 
+SRC = ft_main.c \
+	ft_path.c
 SRCS = $(addprefix ${SRC_PATH}, ${SRC})
 
 OBJ_PATH	= obj/
@@ -24,7 +25,7 @@ DEPS = $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
 
 INC = -I./includes/
 
-LIBS = -L./libs/libft -lft -L./libs/printf -lprintf -L./libs/gnl -lget_next_line -L./libs/minilibx-linux -lmlx -lXext -lX11 -lm -lz
+LIBS = -L./libs/libft -lft -L./libs/printf -lprintf -L./libs/gnl -lget_next_line # -L./libs/minilibx-linux -lmlx -lXext -lX11 -lm -lz
 
 FLAGS = -Wall -Wextra -Werror -MMD -MP -g
 
@@ -32,7 +33,7 @@ ${NAME} : ${OBJS}
 	make -C ./libs/libft/
 	make -C ./libs/gnl/
 	make -C ./libs/printf/
-	make -C ./libs/minilibx-linux/
+#	make -C ./libs/minilibx-linux/
 	clang ${FLAGS} $(OBJS) $(LIBS) -o ${NAME}
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
@@ -45,7 +46,7 @@ clean :
 	make clean -C ./libs/libft/
 	make clean -C ./libs/printf/
 	make clean -C ./libs/gnl/
-	make clean -C ./libs/minilibx-linux/
+#	make clean -C ./libs/minilibx-linux/
 	rm -rf ${OBJ_PATH}
 
 fclean : clean
