@@ -6,7 +6,7 @@
 #    By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/05 18:29:25 by zhamdouc          #+#    #+#              #
-#    Updated: 2022/11/02 12:39:29 by zakariyaham      ###   ########.fr        #
+#    Updated: 2022/11/23 16:17:45 by zakariyaham      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ COMPIL = gcc -Wall -Werror -Wextra
 all : ${NAME}
 
 ${NAME} : ${OBJ}
-	ar rc ${NAME} ${OBJ}
+	ar rc ${NAME} $^
 
 %.o : %.c
 	${COMPIL} -o $@ -c $<

@@ -6,7 +6,7 @@
 #    By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:57:01 by zakariyaham       #+#    #+#              #
-#    Updated: 2022/11/21 19:13:28 by zakariyaham      ###   ########.fr        #
+#    Updated: 2022/11/23 16:23:13 by zakariyaham      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ FLAGS = -Wall -Wextra -Werror -MMD -MP -g
 
 ${NAME} : ${OBJS}
 	make -C ./libs/libft/
-	make -C ./libs/gnl/
 	make -C ./libs/printf/
+	make -C ./libs/gnl/
 #	make -C ./libs/minilibx-linux/
 	clang ${FLAGS} $(OBJS) $(LIBS) -o ${NAME}
 

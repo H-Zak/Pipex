@@ -6,7 +6,7 @@
 /*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:13:53 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/11/21 19:12:14 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2022/11/23 17:23:59 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,33 @@ void	free_all(char **cmd_path, char *path)
 	}
 }
 
-char	*get_the_path(char **envp, char **cmd)
+char	*get_the_path(char **envp, char **cmd, t_list list)
 {
-	char	**cmd_path;
-	char	*path;
+	//char	**cmd_path;
+	//char	*path;
 	int		i;
-
+//free la list
 	i = 0;
 	while (envp[i])
 	{
-		path = ft_strnstr(envp[i], "PATH=", 5);
-		if (path != NULL)
+		list.path = ft_strnstr(envp[i], "PATH=", 5);
+		if (list.path != NULL)
 			break;
-		free(path);
+		free(list.path);
 		i++;
 	}
-	path = ft_substr(path, 5, (ft_strlen(path) - 5));
-	cmd_path = ft_split(path, ':');//
-	if (cmd_path == NULL)
+	list.path = ft_substr(path, 5, (ft_strlen(path) - 5));
+	list.cmd_path = ft_split(path, ':');//
+	if (list.cmd_path == NULL)
 	{
-		free_all(cmd_path, path);
+		free_all(list.cmd_path, list.path);
 		return (NULL);
 	}
 	i = 0;
-	while (cmd_path[i])
+	while (list.cmd_path[i])
 	{
-		cmd_path[i] = put_path(cmd_path, i, "/");
-		cmd_path[i] = put_path(cmd_path, i, cmd[0]);//si cmd[0] != ' '
+		list.cmd_path[i] = put_path(list.cmd_path, i, "/");
+		list.cmd_path[i] = put_path(list.cmd_path, i, cmd[0]);//si cmd[0] != ' '
 		if (access(cmd_path[i], F_OK | X_OK) == 0)
 			return (cmd_path[i]);//free dans le main
 		i++;
