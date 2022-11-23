@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_path.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:13:53 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/11/23 17:23:59 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2022/11/23 20:32:04 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,37 @@ void	free_all(char **cmd_path, char *path)
 	}
 }
 
-char	*get_the_path(char **envp, char **cmd, t_list list)
+char	*get_the_path(char **envp, char **cmd, t_vare vare)
 {
 	//char	**cmd_path;
 	//char	*path;
 	int		i;
-//free la list
+//free la vare
 	i = 0;
 	while (envp[i])
 	{
-		list.path = ft_strnstr(envp[i], "PATH=", 5);
-		if (list.path != NULL)
+		vare.path = ft_strnstr(envp[i], "PATH=", 5);
+		if (vare.path != NULL)
 			break;
-		free(list.path);
+		free(vare.path);
 		i++;
 	}
-	list.path = ft_substr(path, 5, (ft_strlen(path) - 5));
-	list.cmd_path = ft_split(path, ':');//
-	if (list.cmd_path == NULL)
+	vare.path = ft_substr(vare.path, 5, (ft_strlen(vare.path) - 5));
+	vare.cmd_path = ft_split(vare.path, ':');//
+	if (vare.cmd_path == NULL)
 	{
-		free_all(list.cmd_path, list.path);
+		free_all(vare.cmd_path, vare.path);
 		return (NULL);
 	}
 	i = 0;
-	while (list.cmd_path[i])
+	while (vare.cmd_path[i])
 	{
-		list.cmd_path[i] = put_path(list.cmd_path, i, "/");
-		list.cmd_path[i] = put_path(list.cmd_path, i, cmd[0]);//si cmd[0] != ' '
-		if (access(cmd_path[i], F_OK | X_OK) == 0)
-			return (cmd_path[i]);//free dans le main
+		vare.cmd_path[i] = put_path(vare.cmd_path, i, "/");
+		vare.cmd_path[i] = put_path(vare.cmd_path, i, cmd[0]);//si cmd[0] != ' '
+		if (access(vare.cmd_path[i], F_OK | X_OK) == 0)
+			return (vare.cmd_path[i]);//free dans le main
 		i++;
 	}
-	free_all(cmd_path, path);
+	free_all(vare.cmd_path, vare.path);
 	return (NULL);
 }

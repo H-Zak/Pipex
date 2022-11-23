@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:14:43 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/23 17:12:42 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2022/11/23 20:30:18 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdio.h>
 # include <string.h>
 
-typedef struct s_list
+typedef struct s_vare
 {
 	char	*the_path;
 	char	**cmd1;
@@ -32,7 +32,7 @@ typedef struct s_list
 	int		fd_out;
 	char	**cmd_path;
 	char	*path;
-}				t_list;
-char	*get_the_path(char **envp, char **cmd);
+}				t_vare;
+char	*get_the_path(char **envp, char **cmd, t_vare vare);
 
 #endif
