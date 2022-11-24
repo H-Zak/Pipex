@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:13:53 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/11/23 20:32:04 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:52:09 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_all(char **cmd_path, char *path)
 	}
 }
 
-char	*get_the_path(char **envp, char **cmd, t_vare vare)
+char	*get_the_path(char **envp, char **cmd, t_vare *vare)
 {
 	//char	**cmd_path;
 	//char	*path;
@@ -49,28 +49,28 @@ char	*get_the_path(char **envp, char **cmd, t_vare vare)
 	i = 0;
 	while (envp[i])
 	{
-		vare.path = ft_strnstr(envp[i], "PATH=", 5);
-		if (vare.path != NULL)
+		vare->path = ft_strnstr(envp[i], "PATH=", 5);
+		if (vare->path != NULL)
 			break;
-		free(vare.path);
+		free(vare->path);
 		i++;
 	}
-	vare.path = ft_substr(vare.path, 5, (ft_strlen(vare.path) - 5));
-	vare.cmd_path = ft_split(vare.path, ':');//
-	if (vare.cmd_path == NULL)
+	vare->path = ft_substr(vare->path, 5, (ft_strlen(vare->path) - 5));
+	vare->cmd_path = ft_split(vare->path, ':');//
+	if (vare->cmd_path == NULL)
 	{
-		free_all(vare.cmd_path, vare.path);
+		free_all(vare->cmd_path, vare->path);
 		return (NULL);
 	}
 	i = 0;
-	while (vare.cmd_path[i])
+	while (vare->cmd_path[i])
 	{
-		vare.cmd_path[i] = put_path(vare.cmd_path, i, "/");
-		vare.cmd_path[i] = put_path(vare.cmd_path, i, cmd[0]);//si cmd[0] != ' '
-		if (access(vare.cmd_path[i], F_OK | X_OK) == 0)
-			return (vare.cmd_path[i]);//free dans le main
+		vare->cmd_path[i] = put_path(vare->cmd_path, i, "/");
+		vare->cmd_path[i] = put_path(vare->cmd_path, i, cmd[0]);//si cmd[0] != ' '
+		if (access(vare->cmd_path[i], F_OK | X_OK) == 0)
+			return (vare->cmd_path[i]);//free dans le main
 		i++;
 	}
-	free_all(vare.cmd_path, vare.path);
+	free_all(vare->cmd_path, vare->path);
 	return (NULL);
 }

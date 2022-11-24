@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:14:43 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/23 20:30:18 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:52:09 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ typedef struct s_vare
 	char	**cmd_path;
 	char	*path;
 }				t_vare;
-char	*get_the_path(char **envp, char **cmd, t_vare vare);
+char	*get_the_path(char **envp, char **cmd, t_vare *vare);
 
 #endif
