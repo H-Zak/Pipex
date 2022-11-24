@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:13:53 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/11/24 16:52:09 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/24 18:09:18 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,26 @@ char	*put_path(char **cmd_path, int i, char *c)
 
 }
 
-void	free_all(char **cmd_path, char *path)
-{
-	int	i;
+// void	free_path(char **cmd_path, char *path)
+// {
+// 	int	i;
 
-	i = 0;
-	if (path != NULL)
-		free(path);
-	if (cmd_path != NULL)
-	{
-		while (cmd_path[i])
-		{
-			free(cmd_path[i]);
-			i++;
-		}
-		free(cmd_path);
-	}
-}
+// 	i = 0;
+// 	if (path != NULL)
+// 		free(path);
+// 	if (cmd_path != NULL)
+// 	{
+// 		while (cmd_path[i])
+// 		{
+// 			free(cmd_path[i]);
+// 			i++;
+// 		}
+// 		free(cmd_path);
+// 	}
+// }
 
 char	*get_the_path(char **envp, char **cmd, t_vare *vare)
 {
-	//char	**cmd_path;
-	//char	*path;
 	int		i;
 //free la vare
 	i = 0;
@@ -59,7 +57,8 @@ char	*get_the_path(char **envp, char **cmd, t_vare *vare)
 	vare->cmd_path = ft_split(vare->path, ':');//
 	if (vare->cmd_path == NULL)
 	{
-		free_all(vare->cmd_path, vare->path);
+		//free_path(vare->cmd_path, vare->path);
+		free_all(vare);
 		return (NULL);
 	}
 	i = 0;
@@ -71,6 +70,7 @@ char	*get_the_path(char **envp, char **cmd, t_vare *vare)
 			return (vare->cmd_path[i]);//free dans le main
 		i++;
 	}
-	free_all(vare->cmd_path, vare->path);
+	//free_path(vare->cmd_path, vare->path);
+	free_all(vare);
 	return (NULL);
 }

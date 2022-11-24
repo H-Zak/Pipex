@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:14:43 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/24 16:52:09 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/24 18:08:36 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ typedef struct s_vare
 	int		fd_out;
 	char	**cmd_path;
 	char	*path;
+	int		pipe_fd[2];
+	int		i;
+	int 	status;
 }				t_vare;
 char	*get_the_path(char **envp, char **cmd, t_vare *vare);
+void	free_all(t_vare *vare);
 
 #endif
