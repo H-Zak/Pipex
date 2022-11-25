@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:14:43 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/24 18:08:36 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/25 20:12:19 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,8 @@ typedef struct s_vare
 }				t_vare;
 char	*get_the_path(char **envp, char **cmd, t_vare *vare);
 void	free_all(t_vare *vare);
+int		ft_check_open(char **argv, t_vare *vare, int argc);
+int		end_close(t_vare *vare);
+int		raccourci(char **argv, t_vare *vare, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:13:53 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/11/24 18:09:18 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/25 20:18:55 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,16 @@ char	*get_the_path(char **envp, char **cmd, t_vare *vare)
 	}
 	//free_path(vare->cmd_path, vare->path);
 	free_all(vare);
+	
 	return (NULL);
+}
+
+int	raccourci(char **argv, t_vare *vare, int i)
+{
+	if (access(argv[i], F_OK | X_OK) == 0)
+	{
+		vare->the_path = ft_strdup(argv[i]);
+		return (0);//free dans le main
+	}
+	return (1);
 }
