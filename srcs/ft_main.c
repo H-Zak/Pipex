@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:16:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 17:14:13 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:33:27 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	child1(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 {
 	if (dup2(vare->fd_in, STDIN_FILENO) < 0)
 		return (write_error("dup2"), 1);
+	if (close(vare->fd_in) < 0)
+		return (write_error("fd_in"), 1);
 	if (close(vare->fd_out) < 0)
 		return (write_error("fd_out"), 1);
 	if (close(pipe_fd[0]) < 0)
@@ -95,6 +97,8 @@ int	child2(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 {
 	if (dup2(vare->fd_out, STDOUT_FILENO) < 0)
 		return (write_error("dup2"), 1);
+	if (close(vare->fd_out) < 0)
+		return (write_error("fd_out"), 1);
 	if (close(vare->fd_in) < 0)
 		return (write_error("fd_in"), 1);
 	if (close(pipe_fd[1]) < 0)
