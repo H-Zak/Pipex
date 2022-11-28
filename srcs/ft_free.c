@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:06:16 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 17:12:42 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:12:59 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	free_all(t_vare *vare)
 int	end_close(t_vare *vare)
 {
 	if (close(vare->pipe_fd[0]) < 0)
-		return (write_error("pipe_fd[0]"), 1);
+		return (write_error("pipe_fd[0]", vare, "1111"), 1);
 	if (close(vare->pipe_fd[1]) < 0)
-		return (write_error("pipe_fd[1]"), 1);
+		return (write_error("pipe_fd[1]", vare, "1111"), 1);
 	if (close(vare->fd_in) < 0)
-		return (write_error("fd_in"), 1);
+		return (write_error("fd_in", vare, "1111"), 1);
 	if (close(vare->fd_out) < 0)
-		return (write_error("fd_out"), 1);
+		return (write_error("fd_out", vare, "1111"), 1);
 	free_all(vare);
 	return (0);
 }

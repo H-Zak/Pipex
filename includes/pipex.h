@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:14:43 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 17:01:37 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 20:21:07 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		ft_check_open(char **argv, t_vare *vare, int argc);
 int		end_close(t_vare *vare);
 int		raccourci(char **argv, t_vare *vare, int i);
 void free_all(t_vare *vare);
-void	write_error(char * argv);
+void	write_error(char * argv, t_vare *vare, char *tab);
+void	write_error_2(char * argv);
 
 #endif

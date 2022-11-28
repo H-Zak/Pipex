@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:16:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 17:33:27 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 20:21:24 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		pid = fork();
 		if (pid < 0)
-			return (write_error("fork_pid"), 1);
+			return (write_error("fork_pid", &vare, "1111"), 1);
 		if (loop(&vare, envp, argv, pid) != 0)
 			return (1);
 		vare.i++;
@@ -50,9 +50,9 @@ int	loop(t_vare *vare, char **envp, char **argv, pid_t pid)
 	{
 		n = child1(vare, envp, vare->pipe_fd, argv);
 		if (n == 1)
-			return (end_close(vare), 1);
+			return (1);
 		if (n == 2)
-			return (end_close(vare), 2);
+			return (2);
 	}
 	if (vare->i == 1 && pid == 0)
 	{
@@ -68,27 +68,27 @@ int	loop(t_vare *vare, char **envp, char **argv, pid_t pid)
 int	child1(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 {
 	if (dup2(vare->fd_in, STDIN_FILENO) < 0)
-		return (write_error("dup2"), 1);
+		return (write_error("dup2", vare, "1111"), 1);
 	if (close(vare->fd_in) < 0)
-		return (write_error("fd_in"), 1);
+		return (write_error("fd_in", vare, "0111"), 1);
 	if (close(vare->fd_out) < 0)
-		return (write_error("fd_out"), 1);
+		return (write_error("fd_out", vare, "0011"), 1);
 	if (close(pipe_fd[0]) < 0)
-		return (write_error("pipe_fd[0]"), 1);
+		return (write_error("pipe_fd[0]", vare, "0010"), 1);
 	if (dup2(pipe_fd[1], STDOUT_FILENO) < 0)
-		return (write_error("dup2"), 1);
+		return (write_error("dup2", vare, "0010"), 1);
 	if (close(pipe_fd[1]) < 0)
-		return (write_error("pipe_fd[1]"), 1);
+		return (write_error("pipe_fd[1]", vare, "0000"), 1);
 	if (raccourci(argv, vare, 2) == 1)
 	{
 		vare->the_path = get_the_path(envp, vare->cmd1, vare);
 		if (vare->the_path == NULL)
-			return (ft_putstr_fd("No path found\n", 2), 2);
+			return (write_error_2(argv[2]), 2);
 	}
 	if (execve(vare->the_path, vare->cmd1, envp) < 0)
 	{
 		free_all(vare);
-		return (write_error("execve"), 1);
+		return (write_error("execve", vare, "0000"), 1);
 	}
 	return (1);
 }
@@ -96,27 +96,27 @@ int	child1(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 int	child2(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 {
 	if (dup2(vare->fd_out, STDOUT_FILENO) < 0)
-		return (write_error("dup2"), 1);
+		return (write_error("dup2", vare, "1111"), 1);
 	if (close(vare->fd_out) < 0)
-		return (write_error("fd_out"), 1);
+		return (write_error("fd_out", vare, "1011"), 1);
 	if (close(vare->fd_in) < 0)
-		return (write_error("fd_in"), 1);
+		return (write_error("fd_in", vare, "0011"), 1);
 	if (close(pipe_fd[1]) < 0)
-		return (write_error("pipe_fd[1]"), 1);
+		return (write_error("pipe_fd[1]", vare, "0001"), 1);
 	if (dup2(pipe_fd[0], STDIN_FILENO) < 0)
-		return (write_error("dup2"), 1);
+		return (write_error("dup2", vare, "0000"), 1);
 	if (close(pipe_fd[0]) < 0)
-		return (write_error("pipe[0]"), 1);
+		return (write_error("pipe[0]", vare, "0000"), 1);
 	if (raccourci(argv, vare, 3) == 1)
 	{
 		vare->the_path = get_the_path(envp, vare->cmd2, vare);
 		if (vare->the_path == NULL)
-			return (ft_putstr_fd("No path found\n", 2), 2);
+			return (write_error_2(argv[3]), 2);
 	}
 	if (execve(vare->the_path, vare->cmd2, envp) < 0)
 	{
 		free_all(vare);
-		write_error("execve");
+		write_error("execve", vare, "0000");
 	}
 	return (1);//ne renvoie rien si tout ce passe bien
 }
