@@ -1,0 +1,117 @@
+< in cat | ./wc > out
+bash: ./wc: No such file or directory
+code : 127
+
+(cat is ok)
+##################################################
+
+< in cat | .wc > out
+bash: .wc: command not found
+code : 127
+
+(cat is ok)
+##################################################
+
+< in "" | "" > out
+bash: : command not found
+bash: : command not found
+code : 127
+
+##################################################
+
+< in cat | "" > out
+bash: : command not found
+code : 127
+
+(cat is ok)
+##################################################
+
+< in "" | cat > out
+bash: : command not found
+code : 0
+
+(cat is ok)
+##################################################
+< in cat | ls > out
+
+code : 0
+(cat + ls ok)
+##################################################
+< in ls | cat > out
+
+code : 0
+(ls + cat ok)
+##################################################
+< in sdfdsfs | cat > out
+bash: sdfdsfs: command not found
+code : 0
+
+(cat is ok)
+##################################################
+chmod 000 in && < in cat | wc > out
+bash: in: Permission denied
+code : 0
+
+(wc is ok)
+##################################################
+chmod 000 out && < in cat | wc > out
+bash: out: Permission denied
+code : 1
+
+(cat is ok / wc not exec)
+##################################################
+< ./directory cat | wc > out
+cat: -: Is a directory
+code : 0
+
+(wc is ok)
+##################################################
+< in cat | wc > ./directory
+bash: indir: Is a directory
+code : 1
+
+(cat is ok)
+##################################################
+< in cat | dsda > ./directory
+bash: indir: Is a directory
+code : 1
+
+(cat is ok / cmd2 not exec)
+##################################################
+< in cat | "    wc" > out
+bash:     wc: command not found
+code : 127
+
+(cat is ok)
+##################################################
+< in cat | "wc    " > out
+bash: wc    : command not found
+code : 127
+
+(cat is ok)
+##################################################
+< in cat | "wc     -l" > out
+bash: wc     -l: command not found
+code : 127
+
+(cat is ok)
+##################################################
+< /dev/urandom cat | head > out
+
+code : 0
+
+(cat && head ok / out full of shit)
+##################################################
+time < /dev/stdin sleep 5 | sleep 5 > /dev/stdout
+
+real	0m5.002s
+user	0m0.002s
+sys	0m0.000s
+code : 0
+##################################################
+ < /dev/stdin cat | esds /dev/stdout
+bash: esds: command not found
+
+code : 127
+(cat wait input)
+##################################################

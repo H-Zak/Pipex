@@ -6,7 +6,7 @@
 #    By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:57:01 by zakariyaham       #+#    #+#              #
-#    Updated: 2022/11/25 18:12:41 by zhamdouc         ###   ########.fr        #
+#    Updated: 2022/11/28 15:07:21 by zhamdouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = pipex
 
 SRC_PATH = ./srcs/
 SRC = ft_main.c \
-	ft_path.c ft_check.c
+	ft_path.c ft_check.c ft_free.c
 SRCS = $(addprefix ${SRC_PATH}, ${SRC})
 
 OBJ_PATH	= obj/

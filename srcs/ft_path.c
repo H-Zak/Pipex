@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:13:53 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/11/25 20:18:55 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 15:23:46 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,35 @@
 
 char	*put_path(char **cmd_path, int i, char *c)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = ft_strjoin(cmd_path[i], c);
 	free(cmd_path[i]);
 	return (tmp);
-
 }
 
-// void	free_path(char **cmd_path, char *path)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (path != NULL)
-// 		free(path);
-// 	if (cmd_path != NULL)
-// 	{
-// 		while (cmd_path[i])
-// 		{
-// 			free(cmd_path[i]);
-// 			i++;
-// 		}
-// 		free(cmd_path);
-// 	}
-// }
-
-char	*get_the_path(char **envp, char **cmd, t_vare *vare)
+void	found_path(char **envp, t_vare *vare, int i)
 {
-	int		i;
-//free la vare
-	i = 0;
 	while (envp[i])
 	{
 		vare->path = ft_strnstr(envp[i], "PATH=", 5);
 		if (vare->path != NULL)
-			break;
+			break ;
 		free(vare->path);
 		i++;
 	}
+}
+
+char	*get_the_path(char **envp, char **cmd, t_vare *vare)
+{
+	int		i;
+
+	i = 0;
+	found_path(envp, vare, i);
 	vare->path = ft_substr(vare->path, 5, (ft_strlen(vare->path) - 5));
-	vare->cmd_path = ft_split(vare->path, ':');//
+	vare->cmd_path = ft_split(vare->path, ':');
 	if (vare->cmd_path == NULL)
 	{
-		//free_path(vare->cmd_path, vare->path);
 		free_all(vare);
 		return (NULL);
 	}
@@ -65,14 +50,12 @@ char	*get_the_path(char **envp, char **cmd, t_vare *vare)
 	while (vare->cmd_path[i])
 	{
 		vare->cmd_path[i] = put_path(vare->cmd_path, i, "/");
-		vare->cmd_path[i] = put_path(vare->cmd_path, i, cmd[0]);//si cmd[0] != ' '
+		vare->cmd_path[i] = put_path(vare->cmd_path, i, cmd[0]);
 		if (access(vare->cmd_path[i], F_OK | X_OK) == 0)
-			return (vare->cmd_path[i]);//free dans le main
+			return (vare->cmd_path[i]);
 		i++;
 	}
-	//free_path(vare->cmd_path, vare->path);
 	free_all(vare);
-	
 	return (NULL);
 }
 
@@ -81,7 +64,13 @@ int	raccourci(char **argv, t_vare *vare, int i)
 	if (access(argv[i], F_OK | X_OK) == 0)
 	{
 		vare->the_path = ft_strdup(argv[i]);
-		return (0);//free dans le main
+		return (0);
+	}
+	if (argv[i][0] == '.' && argv[i][1] == '/')
+	{
+		vare->the_path = "./";
+		vare->cmd2[0] = "wc";
+		return (0);
 	}
 	return (1);
 }

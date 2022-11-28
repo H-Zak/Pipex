@@ -5,3 +5,6 @@ si la sortie de ma premiere commande ne correspond pas a l'entré attendu de ma 
 commanger utiliser perror
 
 gerer les cas "./" et "."
+quand le programme s'arrete il faut tout fermer ?
+
+valgrind --leak-check=full --trace-children=yes --track-fds=yes

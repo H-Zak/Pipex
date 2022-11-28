@@ -6,11 +6,13 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:29 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/25 20:12:16 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 15:47:23 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+int	check_space(char *argv);
 
 int	ft_check_open(char **argv, t_vare *vare, int argc)
 {
@@ -27,6 +29,16 @@ int	ft_check_open(char **argv, t_vare *vare, int argc)
 		return (ft_putstr_fd("bash: : command not found\nbash: : command not found\n", 2), 1);
 	if (argv[2][0] == '\0' || argv[3][0] == '\0')
 		return (ft_putstr_fd("bash: : command not found\n", 2), 1);
+	if (check_space(argv[2]) == 1 && check_space(argv[3]) == 1)
+		return (1);
+	if (check_space(argv[3]) == 1)
+		return (1);
+	// if (check_space(argv) == 2)
+	// {
+	// 	ft_putstr_fd("bash: ", 2);
+	// 	ft_putstr_fd(argv[3], 2);
+	// 	return (ft_putstr_fd(": command not found\n", 2), 1);
+	// }
 	vare->fd_in = open(argv[1], O_RDWR);
 	if (vare->fd_in < 0)
 		return (perror("open"), 1);
@@ -44,19 +56,72 @@ int	ft_check_open(char **argv, t_vare *vare, int argc)
 	return (0);
 }
 
-int	end_close(t_vare *vare)
+int	found_space(char *argv, int i)
 {
-	if (close(vare->pipe_fd[0]) < 0)
-		return (perror("close"), 1);
-	if (close(vare->pipe_fd[1]) < 0)
-		return (perror("close"), 1);
-	if (close(vare->fd_in) < 0)
-		return (perror("close"), 1);
-	if (close(vare->fd_out) < 0)
-		return (perror("close"), 1);
-	free_all(vare);
-	return(0);
+	int space;
+
+	space = 0;
+	while (argv[i])
+	{
+		space = 0;
+		while (argv[i] == ' ')
+		{
+			i++;
+			space++;
+		}
+		if (space > 1)
+			return (1);
+		i++;
+	}
+	return (0);
 }
+
+int	check_space(char *argv)//possible conditionnal jump des lors utiliser ft-strlen
+{
+	int	len;
+	int n;
+
+	len = 0;
+	n = 0;
+	len = ft_strlen(argv);
+	if (argv[0] == ' ' || argv[len - 1] == ' ')
+		n = 1;
+	if (argv[0] == '.' && argv[1] != '/')
+		n = 1;
+	if(found_space(argv, 0) != 0)
+		n = 1;
+	if (n == 1)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(argv, 2);
+		return (ft_putstr_fd(": command not found\n", 2), 1);
+	}
+	return (0);
+}
+
+
+// int	check_space_2(char **argv)//possible conditionnal jump des lors utiliser ft-strlen
+// {
+// 	int	len;
+
+// 	len = 0;
+// 	len = ft_strlen(argv[2]);
+// 	if (argv[2][0] == ' ' || argv[2][len - 1] == ' ')
+// 		return (1);
+// 	len = ft_strlen(argv[3]);
+// 	if (argv[3][0] == ' ' || argv[3][len - 1] == ' ')
+// 		return (2);
+// 	if (argv[2][0] == '.' && argv[2][1] != '/')
+// 		return (1);
+// 	if (argv[3][0] == '.' && argv[3][1] != '/')
+// 		return (2);
+// 	if(found_space(argv, 2, 0) != 0)
+// 		return (1);
+// 	if(found_space(argv, 3, 0) != 0)
+// 		return (2);
+// 	return (0);
+// }
+
 
 // int check_cmd(t_vare *vare)
 // {
