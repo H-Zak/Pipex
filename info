@@ -10,3 +10,4 @@ quand le programme s'arrete il faut tout fermer ?
 valgrind --leak-check=full --trace-children=yes --track-fds=yes
 
 test avec directry
+difference entre child 1 et child 2 (end close)
