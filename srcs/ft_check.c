@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:29 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 20:46:32 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 21:05:31 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_check_open(char **argv, t_vare *vare, int argc)
 	if (pipe(vare->pipe_fd) < 0 )
 		return (write_error("pipe_fd", vare, "1100"), 1);
 	vare->cmd1 = ft_split(argv[2], ' ');
+	if (vare->cmd1 == NULL)
 		return (ft_putstr_fd("bash: : command not found\n", 2), 1);
 	vare->cmd2 = ft_split(argv[3], ' ');
 	if (vare->cmd2 == NULL)
