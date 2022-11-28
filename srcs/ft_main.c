@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:16:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 17:03:05 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:11:28 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ int	loop(t_vare *vare, char **envp, char **argv, pid_t pid)
 int	child1(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 {
 	if (dup2(vare->fd_in, STDIN_FILENO) < 0)
-		return (perror("dup2"), 1);
+		return (write_error("dup2"), 1);
 	if (close(vare->fd_out) < 0)
-		return (perror("close"), 1);
+		return (write_error("fd_out"), 1);
 	if (close(pipe_fd[0]) < 0)
-		return (perror("close"), 1);
+		return (write_error("pipe_fd[0]"), 1);
 	if (dup2(pipe_fd[1], STDOUT_FILENO) < 0)
-		return (perror("dup2"), 1);
+		return (write_error("dup2"), 1);
 	if (close(pipe_fd[1]) < 0)
-		return (perror("close"), 1);
+		return (write_error("pipe_fd[1]"), 1);
 	if (raccourci(argv, vare, 2) == 1)
 	{
 		vare->the_path = get_the_path(envp, vare->cmd1, vare);
@@ -94,15 +94,15 @@ int	child1(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 int	child2(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 {
 	if (dup2(vare->fd_out, STDOUT_FILENO) < 0)
-		return (perror("dup2"), 1);
+		return (write_error("dup2"), 1);
 	if (close(vare->fd_in) < 0)
-		return (perror("close"), 1);
+		return (write_error("fd_in"), 1);
 	if (close(pipe_fd[1]) < 0)
-		return (perror("close"), 1);
+		return (write_error("pipe_fd[1]"), 1);
 	if (dup2(pipe_fd[0], STDIN_FILENO) < 0)
-		return (perror("dup2"), 1);
+		return (write_error("dup2"), 1);
 	if (close(pipe_fd[0]) < 0)
-		return (perror("close"), 1);
+		return (write_error("pipe[0]"), 1);
 	if (raccourci(argv, vare, 3) == 1)
 	{
 		vare->the_path = get_the_path(envp, vare->cmd2, vare);

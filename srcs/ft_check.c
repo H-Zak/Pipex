@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:29 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 17:05:55 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:11:39 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ int	check_space(char *argv)//possible conditionnal jump des lors utiliser ft-str
 
 void	write_error(char * argv)
 {
-	ft_putstr_fd("bash:", 2);
+	ft_putstr_fd("bash: ", 2);
 	perror(argv);
 }
