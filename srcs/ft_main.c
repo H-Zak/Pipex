@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:16:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 17:11:28 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:14:13 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		pid = fork();
 		if (pid < 0)
-			return (perror("open_pid"), 1);
+			return (write_error("fork_pid"), 1);
 		if (loop(&vare, envp, argv, pid) != 0)
 			return (1);
 		vare.i++;
@@ -86,7 +86,7 @@ int	child1(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 	if (execve(vare->the_path, vare->cmd1, envp) < 0)
 	{
 		free_all(vare);
-		return (perror("execve"), 1);
+		return (write_error("execve"), 1);
 	}
 	return (1);
 }
@@ -112,7 +112,7 @@ int	child2(t_vare *vare, char **envp, int *pipe_fd, char **argv)
 	if (execve(vare->the_path, vare->cmd2, envp) < 0)
 	{
 		free_all(vare);
-		perror("execve");
+		write_error("execve");
 	}
 	return (1);//ne renvoie rien si tout ce passe bien
 }

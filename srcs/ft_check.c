@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:29 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 17:11:39 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:13:25 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_check_open(char **argv, t_vare *vare, int argc)
 	if (vare->fd_out < 0)
 		return (write_error(argv[4]), 1);
 	if (pipe(vare->pipe_fd) < 0 )
-		return (perror("pipe"), 1);
+		return (write_error("pipe_fd"), 1);
 	vare->cmd1 = ft_split(argv[2], ' ');//cmd[1] correspond a la command et le reste aux options, que faire si il commence par un " "
 	if (vare->cmd1 == NULL)
 		return (ft_putstr_fd("bash: : command not found\n", 2), 1);
