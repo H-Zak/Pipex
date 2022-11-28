@@ -6,13 +6,14 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:29 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 15:47:23 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:05:55 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
 int	check_space(char *argv);
+void	write_error(char * argv);
 
 int	ft_check_open(char **argv, t_vare *vare, int argc)
 {
@@ -41,10 +42,10 @@ int	ft_check_open(char **argv, t_vare *vare, int argc)
 	// }
 	vare->fd_in = open(argv[1], O_RDWR);
 	if (vare->fd_in < 0)
-		return (perror("open"), 1);
+		return (write_error(argv[1]), 1);
 	vare->fd_out = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);//secu
 	if (vare->fd_out < 0)
-		return (perror("open"), 1);
+		return (write_error(argv[4]), 1);
 	if (pipe(vare->pipe_fd) < 0 )
 		return (perror("pipe"), 1);
 	vare->cmd1 = ft_split(argv[2], ' ');//cmd[1] correspond a la command et le reste aux options, que faire si il commence par un " "
@@ -99,31 +100,8 @@ int	check_space(char *argv)//possible conditionnal jump des lors utiliser ft-str
 	return (0);
 }
 
-
-// int	check_space_2(char **argv)//possible conditionnal jump des lors utiliser ft-strlen
-// {
-// 	int	len;
-
-// 	len = 0;
-// 	len = ft_strlen(argv[2]);
-// 	if (argv[2][0] == ' ' || argv[2][len - 1] == ' ')
-// 		return (1);
-// 	len = ft_strlen(argv[3]);
-// 	if (argv[3][0] == ' ' || argv[3][len - 1] == ' ')
-// 		return (2);
-// 	if (argv[2][0] == '.' && argv[2][1] != '/')
-// 		return (1);
-// 	if (argv[3][0] == '.' && argv[3][1] != '/')
-// 		return (2);
-// 	if(found_space(argv, 2, 0) != 0)
-// 		return (1);
-// 	if(found_space(argv, 3, 0) != 0)
-// 		return (2);
-// 	return (0);
-// }
-
-
-// int check_cmd(t_vare *vare)
-// {
-//     if(vare->cmd1[0])
-// }
+void	write_error(char * argv)
+{
+	ft_putstr_fd("bash:", 2);
+	perror(argv);
+}

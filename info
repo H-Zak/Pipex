@@ -8,3 +8,5 @@ gerer les cas "./" et "."
 quand le programme s'arrete il faut tout fermer ?
 
 valgrind --leak-check=full --trace-children=yes --track-fds=yes
+
+test avec directry

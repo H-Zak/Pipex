@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:16:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 15:09:02 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:03:05 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		pid = fork();
 		if (pid < 0)
-			return (perror("open"), 1);
+			return (perror("open_pid"), 1);
 		if (loop(&vare, envp, argv, pid) != 0)
 			return (1);
 		vare.i++;
