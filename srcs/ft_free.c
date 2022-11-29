@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:06:16 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 18:12:59 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:54:10 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_tab(char **tab, int i)
 			i++;
 		}
 		free(tab);
+		tab = NULL;
 	}
 }
 
@@ -31,9 +32,15 @@ void	free_all(t_vare *vare)
 
 	i = 0;
 	if (vare->the_path != NULL)
+	{
 		free(vare->the_path);
+		vare->the_path = NULL;
+	}
 	if (vare->path != NULL)
+	{
 		free(vare->path);
+		vare->path = NULL;
+	}
 	free_tab(vare->cmd1, 0);
 	free_tab(vare->cmd2, 0);
 	free_tab(vare->cmd_path, 0);

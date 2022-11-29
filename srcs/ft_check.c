@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:29 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/28 21:05:31 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:50:05 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,6 @@ int	ft_check_open(char **argv, t_vare *vare, int argc)
 		return (1);
 	if (check_space(argv[3]) == 1)
 		return (1);
-	vare->fd_in = open(argv[1], O_RDWR);
-	if (vare->fd_in < 0)
-		return (write_error(argv[1], vare, "0000"), 1);
-	vare->fd_out = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);//secu
-	if (vare->fd_out < 0)
-		return (write_error(argv[4], vare, "1000"), 1);
 	if (pipe(vare->pipe_fd) < 0 )
 		return (write_error("pipe_fd", vare, "1100"), 1);
 	vare->cmd1 = ft_split(argv[2], ' ');
@@ -109,9 +103,17 @@ void	write_error(char * argv, t_vare *vare, char *tab)
 	free_all(vare);
 }
 
-void	write_error_2(char * argv)
+void	write_error_2(char * argv, int i)
 {
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(argv, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	if (i == 1)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(argv, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
+	if (i == 2)
+	{
+		ft_putstr_fd("bash: ", 2);
+		perror(argv);
+	}
 }

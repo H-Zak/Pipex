@@ -11,3 +11,11 @@ valgrind --leak-check=full --trace-children=yes --track-fds=yes
 
 test avec directry
 difference entre child 1 et child 2 (end close)
+
+chmod 000 in && < in cat | wc > out  (doit creer le fichier et mettre 0  ligne car pas de cat)
+
+< ./directory cat | wc > out
+
+< /dev/stdin cat | esds /dev/stdout
+
+fire un write_error_free (un qui ecrit une erreur mais qui continue, un autre qui ecrit l'erreur free et arrete tout)
