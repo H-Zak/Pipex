@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:14:43 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/29 17:50:16 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:40:33 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ int		raccourci(char **argv, t_vare *vare, int i);
 void free_all(t_vare *vare);
 void	write_error(char * argv, t_vare *vare, char *tab);
 void	write_error_2(char * argv, int i);
+int	child1(t_vare *vare, char **envp, int *pipe_fd, char **argv);
+int	child2(t_vare *vare, char **envp, int *pipe_fd, char **argv);
 
 #endif

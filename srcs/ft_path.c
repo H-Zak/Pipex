@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:13:53 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/11/28 15:23:46 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:57:13 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,18 @@ char	*get_the_path(char **envp, char **cmd, t_vare *vare)
 
 int	raccourci(char **argv, t_vare *vare, int i)
 {
+	int	j;
+
+	j = 0;
+	j = access(argv[i], F_OK | X_OK) != 0;
+	if (argv[i][0] == '.' && argv[i][1] == '/' && j != 0)
+	{
+		write_error_2(argv[i], 3);
+		return (2);
+	}
 	if (access(argv[i], F_OK | X_OK) == 0)
 	{
 		vare->the_path = ft_strdup(argv[i]);
-		return (0);
-	}
-	if (argv[i][0] == '.' && argv[i][1] == '/')
-	{
-		vare->the_path = "./";
-		vare->cmd2[0] = "wc";
 		return (0);
 	}
 	return (1);

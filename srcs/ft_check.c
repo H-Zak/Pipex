@@ -6,35 +6,33 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:29 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/29 17:50:05 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:21:19 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	check_space(char *argv);
-void	write_error(char * argv, t_vare  *vare, char *tab);
+int		check_space(char *argv);
+void	write_error(char *argv, t_vare *vare, char *tab);
+void	init(t_vare *vare);
 
 int	ft_check_open(char **argv, t_vare *vare, int argc)
 {
-	vare->the_path = NULL;
-	vare->cmd1 = NULL;
-	vare->cmd2 = NULL;
-	vare->cmd_path = NULL;
-	vare->path = NULL;
-	vare->status = 0;
-	vare->i = 0;
+	init(vare);
 	if (argc != 5)
-		return (ft_putstr_fd("The number of arguments is incorrect, try again\n", 2), 1);
+		return (ft_putstr_fd("The number of arguments is incorrect\n", 2), 1);
 	if (argv[2][0] == '\0' && argv[3][0] == '\0')
-		return (ft_putstr_fd("bash: : command not found\nbash: : command not found\n", 2), 1);
+	{
+		ft_putstr_fd("bash: : command not found\n", 2);
+		return (ft_putstr_fd("bash: : command not found\n", 2), 1);
+	}
 	if (argv[2][0] == '\0' || argv[3][0] == '\0')
 		return (ft_putstr_fd("bash: : command not found\n", 2), 1);
 	if (check_space(argv[2]) == 1 && check_space(argv[3]) == 1)
 		return (1);
 	if (check_space(argv[3]) == 1)
 		return (1);
-	if (pipe(vare->pipe_fd) < 0 )
+	if (pipe(vare->pipe_fd) < 0)
 		return (write_error("pipe_fd", vare, "1100"), 1);
 	vare->cmd1 = ft_split(argv[2], ' ');
 	if (vare->cmd1 == NULL)
@@ -45,9 +43,20 @@ int	ft_check_open(char **argv, t_vare *vare, int argc)
 	return (0);
 }
 
+void	init(t_vare *vare)
+{
+	vare->the_path = NULL;
+	vare->cmd1 = NULL;
+	vare->cmd2 = NULL;
+	vare->cmd_path = NULL;
+	vare->path = NULL;
+	vare->status = 0;
+	vare->i = 0;
+}
+
 int	found_space(char *argv, int i)
 {
-	int space;
+	int	space;
 
 	space = 0;
 	while (argv[i])
@@ -65,10 +74,11 @@ int	found_space(char *argv, int i)
 	return (0);
 }
 
-int	check_space(char *argv)//possible conditionnal jump des lors utiliser ft-strlen
+//possible conditionnal jump des lors utiliser ft-strlen
+int	check_space(char *argv)
 {
 	int	len;
-	int n;
+	int	n;
 
 	len = 0;
 	n = 0;
@@ -77,7 +87,7 @@ int	check_space(char *argv)//possible conditionnal jump des lors utiliser ft-str
 		n = 1;
 	if (argv[0] == '.' && argv[1] != '/')
 		n = 1;
-	if(found_space(argv, 0) != 0)
+	if (found_space(argv, 0) != 0)
 		n = 1;
 	if (n == 1)
 	{
@@ -88,7 +98,7 @@ int	check_space(char *argv)//possible conditionnal jump des lors utiliser ft-str
 	return (0);
 }
 
-void	write_error(char * argv, t_vare *vare, char *tab)
+void	write_error(char *argv, t_vare *vare, char *tab)
 {
 	ft_putstr_fd("bash: ", 2);
 	perror(argv);
@@ -101,19 +111,4 @@ void	write_error(char * argv, t_vare *vare, char *tab)
 	if (tab[3] == '1')
 		close(vare->pipe_fd[0]);
 	free_all(vare);
-}
-
-void	write_error_2(char * argv, int i)
-{
-	if (i == 1)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(argv, 2);
-		ft_putstr_fd(": command not found\n", 2);
-	}
-	if (i == 2)
-	{
-		ft_putstr_fd("bash: ", 2);
-		perror(argv);
-	}
 }
