@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:16:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/30 17:54:26 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:08:08 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid[2];
 	int		n;
 
+	init(&vare);
 	n = 0;
 	if (ft_check_open(argv, &vare, argc) != 0)
 		return (free_all(&vare), 1);
@@ -30,9 +31,9 @@ int	main(int argc, char **argv, char **envp)
 	{
 		pid[vare.i] = fork();
 		if (pid[vare.i] < 0)
-			return (write_error("fork_pid", &vare, "1111"), 1);
+			return (write_error("fork_pid", &vare, "0011"), 1);
 		if (loop(&vare, envp, argv, pid[vare.i]) != 0)
-			return (1);
+			break ;
 		vare.i++;
 	}
 	close(vare.pipe_fd[1]);
@@ -53,16 +54,12 @@ int	loop(t_vare *vare, char **envp, char **argv, pid_t pid)
 		n = child1(vare, envp, vare->pipe_fd, argv);
 		if (n == 1)
 			return (1);
-		if (n == 2)
-			return (2);
 	}
 	if (vare->i == 1 && pid == 0)
 	{
 		n = child2(vare, envp, vare->pipe_fd, argv);
 		if (n == 1)
 			return (1);
-		if (n == 2)
-			return (2);
 	}
 	return (0);
 }

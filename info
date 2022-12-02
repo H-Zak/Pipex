@@ -9,15 +9,7 @@ quand le programme s'arrete il faut tout fermer ?
 
 valgrind --leak-check=full --trace-children=yes --track-fds=yes
 
-test avec directry
-difference entre child 1 et child 2 (end close)
 
-chmod 000 in && < in cat | wc > out  (doit creer le fichier et mettre 0  ligne car pas de cat)
+./pipex in cat ./wc out PROBLEME QUAND IN N'EXISTE PAS 
 
-< ./directory cat | wc > out
-
-< /dev/stdin cat | esds /dev/stdout
-
-fire un write_error_free (un qui ecrit une erreur mais qui continue, un autre qui ecrit l'erreur free et arrete tout)
-
-faire un open sur les commandes pour avoir si on m'a donne en command un directory
+close(STDIN_FILENO);    close(STDOUT_FILENO);   on peut le mettre dans le write_error

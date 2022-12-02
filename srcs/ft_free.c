@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:06:16 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/30 17:21:47 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:45:51 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_all(t_vare *vare)
 	vare->cmd_path = NULL;
 }
 
-void	write_error_2(char *argv, int i)
+void	write_error_2(char *argv, int i, t_vare *vare)
 {
 	if (i == 1)
 	{
@@ -66,8 +66,12 @@ void	write_error_2(char *argv, int i)
 	{
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(argv, 2);
-		ft_putstr_fd(": Is a directory\n", 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
+	free_all(vare);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	exit(EXIT_FAILURE);
 }
 
 int	end_close(t_vare *vare)

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:13:53 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/11/30 17:57:13 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:46:17 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,17 @@ char	*get_the_path(char **envp, char **cmd, t_vare *vare)
 	return (NULL);
 }
 
-int	raccourci(char **argv, t_vare *vare, int i)
+int	check_access(char **argv, t_vare *vare, int i)
 {
 	int	j;
 
 	j = 0;
-	j = access(argv[i], F_OK | X_OK) != 0;
+	if (check_space(argv[i]) == 1)
+		return (write_error_2(argv[i], 1, vare), 1);
+	j = access(argv[i], F_OK | X_OK);
 	if (argv[i][0] == '.' && argv[i][1] == '/' && j != 0)
 	{
-		write_error_2(argv[i], 3);
+		write_error_2(argv[i], 3, vare);
 		return (2);
 	}
 	if (access(argv[i], F_OK | X_OK) == 0)

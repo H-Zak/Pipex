@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:29 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/11/30 17:21:19 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:43:39 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	init(t_vare *vare);
 
 int	ft_check_open(char **argv, t_vare *vare, int argc)
 {
-	init(vare);
 	if (argc != 5)
 		return (ft_putstr_fd("The number of arguments is incorrect\n", 2), 1);
 	if (argv[2][0] == '\0' && argv[3][0] == '\0')
@@ -28,12 +27,12 @@ int	ft_check_open(char **argv, t_vare *vare, int argc)
 	}
 	if (argv[2][0] == '\0' || argv[3][0] == '\0')
 		return (ft_putstr_fd("bash: : command not found\n", 2), 1);
-	if (check_space(argv[2]) == 1 && check_space(argv[3]) == 1)
-		return (1);
-	if (check_space(argv[3]) == 1)
-		return (1);
 	if (pipe(vare->pipe_fd) < 0)
-		return (write_error("pipe_fd", vare, "1100"), 1);
+	{
+		ft_putstr_fd("bash: ", 2);
+		perror("pipe_fd");
+		return (free(vare), 1);
+	}
 	vare->cmd1 = ft_split(argv[2], ' ');
 	if (vare->cmd1 == NULL)
 		return (ft_putstr_fd("bash: : command not found\n", 2), 1);
@@ -74,7 +73,6 @@ int	found_space(char *argv, int i)
 	return (0);
 }
 
-//possible conditionnal jump des lors utiliser ft-strlen
 int	check_space(char *argv)
 {
 	int	len;
@@ -85,17 +83,9 @@ int	check_space(char *argv)
 	len = ft_strlen(argv);
 	if (argv[0] == ' ' || argv[len - 1] == ' ')
 		n = 1;
-	if (argv[0] == '.' && argv[1] != '/')
-		n = 1;
 	if (found_space(argv, 0) != 0)
 		n = 1;
-	if (n == 1)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(argv, 2);
-		return (ft_putstr_fd(": command not found\n", 2), 1);
-	}
-	return (0);
+	return (n);
 }
 
 void	write_error(char *argv, t_vare *vare, char *tab)
@@ -110,5 +100,8 @@ void	write_error(char *argv, t_vare *vare, char *tab)
 		close(vare->pipe_fd[1]);
 	if (tab[3] == '1')
 		close(vare->pipe_fd[0]);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	free_all(vare);
+	exit(EXIT_FAILURE);
 }
